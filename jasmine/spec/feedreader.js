@@ -63,7 +63,7 @@ $(function() {
          * hiding/showing of the menu element.
          */
         it('the menu element is hidden by default', function() { 
-            expect(bodyClass).toContain('menu-hidden')
+            expect(bodyClass).toContain('menu-hidden');
         });
 
          /* TODO: Write a test that ensures the menu changes
@@ -72,10 +72,10 @@ $(function() {
           * clicked and does it hide when clicked again.
           */
         it('Menu is hidden or shown when it clicked', function() {
-            menuIcon.click()
-            expect(bodyClass).not.toContain('menu-hidden')
-            menuIcon.click()
-            expect(bodyClass).toContain('menu-hidden')
+            menuIcon.click();
+            expect(bodyClass).not.toContain('menu-hidden');
+            menuIcon.click();
+            expect(bodyClass).toContain('menu-hidden');
         });
 
     });
@@ -84,7 +84,7 @@ $(function() {
     describe('Initial Entries', function() {
         beforeEach(function (done) {
             loadFeed(0, done);
-        })
+        });
         /* TODO: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
          * a single .entry element within the .feed container.
@@ -94,15 +94,34 @@ $(function() {
         it('Feed contatiner has .entry elements', function() {
             const entry = document.querySelectorAll('.entry');
 
-            expect(entry.length).not.toBe(0);
-        })
-    })
+            expect(entry.length).toBeGreaterThan(0);
+        });
+    });
 
 
     /* TODO: Write a new test suite named "New Feed Selection" */
+    describe('New Feed Selection', function() {
+        let oldFeed;
+        let newFeed;
+
+        beforeEach(function(done) {
+            loadFeed(0, function() {
+                oldFeed = document.querySelector('.feed').children[0].innerHTML;
+                loadFeed(1, function(){
+                  newFeed = document.querySelector('.feed').children[0].innerHTML;
+                  done();
+                });
+              });
+        });
 
         /* TODO: Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
+        it('a new feed is loaded', function(done) {
+            expect(oldFeed).not.toBe(newFeed);
+            done();
+        });
+
+    });
 }());
