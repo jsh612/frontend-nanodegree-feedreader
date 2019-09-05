@@ -91,10 +91,11 @@ $(function() {
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
-        it('Feed contatiner has .entry elements', function() {
+        it('Feed contatiner has .entry elements', function(done) {
+            const container = document.querySelector('.feed');
             const entry = document.querySelectorAll('.entry');
-
-            expect(entry.length).toBeGreaterThan(0);
+            expect(container.hasChildNodes(entry)).toBe(true);
+            done()
         });
     });
 
